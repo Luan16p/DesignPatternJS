@@ -1,35 +1,30 @@
 'use-strict';
 
-function factoryObject() {
-    const interfacePrivate = {
-        dBackEndUser: {
-            name: 'Luan',
-            password: '00000',
-        },
-        type: 'interface',
-        ID: {
-            PK: '01-01',
-            TK: '01.00.00.01-01'
+function documentCalculatorFactory() {
+    function createCalculator() {
+        const interfacePublic = {
+            Some: (a, b) => a+b,
+            Subtration: (a, b) => a-b,
+            Multiplication: (a, b) => a*b,
+            Division: (a, b) => a/b,
         }
+    
+        return {
+            calculatorPublic: interfacePublic,
+        }
+    
     }
-
-    const interfacePublic = {
-        'pb_item_name': interfacePrivate.dBackEndUser.name,
-        'pb_item_interface': interfacePrivate.type,
-        'pb_item_idd': interfacePrivate.ID.PK,
-    } 
-
-    return interfacePublic
-}
-
-const interfaceFinal = factoryObject()
-
-function outputFactory(ev) {
-    if(!ev) {
-        return;
+    
+    const calculator = createCalculator();
+    
+    const { calculatorPublic } = calculator;
+    
+    function insertCalculator(a, b) {
+        const PublicInterface = [calculatorPublic.Some, calculatorPublic.Subtration, calculatorPublic.Multiplication, calculatorPublic.Division]
+        
+        console.log(`Some is: ${PublicInterface[0](a, b)}.\nSubtration is: ${PublicInterface[1](a, b)}.\nMultiplication is: ${PublicInterface[2](a, b)}.\nDivision is: ${PublicInterface[3](a, b)}.`)
+    
     }
-
-    console.log(ev);
+    
+    insertCalculator(2, 3)
 }
-
-outputFactory((interfaceFinal['pb_item_name']).slice(1))
